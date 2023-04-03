@@ -53,5 +53,92 @@
   {variableName}
   ```
   을 통해 변수 값을 사용할 수 있다
-   
+#### 8. 필터링 
+  ```
+  const FILTER_MAP = {
+    All: () => true,
+    Active: (task) => !task.completed,
+    completed: (task) => task.completed
+  }
+  ```
+  에서는 key:value 형식으로 
+  All 은 모든 작업에 true를 반환하고
+  Active는 완료되지 않는 작업에 true를 반환한다.
+  Completed는 완료된 작업에 true를 반환한다.
   
+  ```
+  const FILTER_NAMES = Object.keys(FILTER_MAP);
+  ```
+  Object.keys를 통해 FILTER_MAP의 key만을 가져와 ['All','Active','completed'] 배열로 선언한다.
+  
+  ```
+  function usePrevious(value){
+    const ref = useRef();
+    useEffect(() => {
+      ref.current = value;
+    }); 
+    return ref.current;
+  }
+  ```
+  지정된 변수의 이전 값을 저장하고 반환하는 사용자 지정 hook이다.
+  hooks, useRef, useEffect는 아래에 서술한다.
+  
+  ```
+  const filterList = FILTER_NAMES.map((name) => (
+    <FilterButton 
+        key={name}
+        name={name}
+        isPressed={name === filter}
+        setFilter={setFilter}
+    />
+  ));
+  ```
+ FILTER_NAMES의 배열은 All, Active, Completed를 map()으로 차례대로 만들어서 FlilterButton이 세 개의 버튼을 만들게 한다.
+ 버튼이 클릭될 때 filter를 업데이트 하는 setFilter를 전달한다.
+ 
+ ```
+ const taskList = 
+    tasks
+  .filter(FILTER_MAP[filter])
+  .map((task) => 
+    <Todo 
+        id={task.id}
+        name={task.name} 
+        completed={task.completed}
+        key={task.id}
+        toggleTaskCompleted={toggleTaskCompleted}
+        deleteTask={deleteTask}
+        editTask={editTask}
+    />
+  );
+ ```
+ FILTER_MAP으로 조건 completed로 true,false를 판별해 filter는 true 인 데이터만 허용한다.
+ 그 후 map으로 task 내의 데이터를 하나씩 돌려 작업을 진행한다.
+ 
+ 그런데 task는 코드 내에서 명시적으로 선언되지 않았는데 , 이것은 FILTER_MAP의 과정에서 'task'로 받고 암시적으로 'task'로 선언되는 것이다.
+ 즉, filter의 FILTER_MAP과정에서 'tasks'가 아닌 'task'를 받으며 암시적으로 이름을 선언한 것을 받는다
+ filter는 true,false로 필터링을 판별한 후 'tasks' 아닌 'task'로 선언된 것을 배열로 반환하고 map은 그 task를 받아서 과정을 처리하는 것이다
+ task를 apple, banana처럼 바꿔서 다른 변수 이름처럼 바꿔서 사용할 수 있다
+ ```
+   const FILTER_MAP = {
+    All: () => true,
+    Active: (apple) => !apple.completed,
+    completed: (apple) => apple.completed,
+  };
+
+  const taskList = tasks
+    .filter(FILTER_MAP[filter])
+    .map((apple) => (
+      <Todo
+        id={apple.id}
+        name={apple.name}
+        completed={apple.completed}
+        key={apple.id}
+        toggleTaskCompleted={toggleTaskCompleted}
+        deleteTask={deleteTask}
+        editTask={editTask}
+      />
+    ));
+ ```
+이러면 filter가 반환하는 것이 task가 아닌 apple이 될 것이다.
+ 
