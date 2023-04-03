@@ -1,70 +1,57 @@
-# Getting Started with Create React App
+# 프로젝트 모르던 것 정리 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+#### 1.[ ]에 관하여
+  useState 코드 부분의 []는 ES6의 기능 중 하나인 구조 분해 할당에 속한다.
+  useState는 [first_argument, setter_argument]로 두 가지 요소로 나눠지는 배열을 만든다.
+  ```
+  const [tasks, setTasks ] = useState(props.tasks);
+  ```
+  위 코드를 보면 tasks는 첫 번째 인수로, props.tasks 값으로 초기화 된다.
+  setTasks는 타 메서드, 함수로 필요할 때 tasks를 업데이트 하는데 사용된다.
+  예시 코드를 보면
+  ```
+  function addTask(name){    
+    const newTask = { id: `todo-${nanoid()}`,name, completed:false};
+    setTasks([...tasks, newTask]);    
+  }
+  ```
+  setTasks를 통해 새로운 newTask를 스프레드 연산자로 ...tasks 인 기본 배열을 복사하고 addTask를 붙여 새 복사본을 만들어 task로 설정한다.
+  
+  만약 [] 없이 코드를 표현하려 한다면
+  ```
+  const tasksState = useState(props.tasks);
+  const tasks = tasksState[0];
+  const setTasks = tasksState[1];
+  ```
+  
+#### 2. {}에 관하여
+  객체 리터럴을 만드는 데 사용된다. 예시 코드를 보자면
+  ```
+  const newTask = { id: todo-${nanoid()}, name, completed: false };
+  ```
+  id, name 및 completed 속성이 있는 객체가 생성된다.
+#### 3. lable 태그에 관하여
 
-## Available Scripts
+  먼저 label은 코드 내에서 특정 위치를 표시하는 것이다.
+  프로젝트 내 label은 입력 요소, 제목에 대한 레이블을 정의하고 있고, htmlFor 속성은 요소의 id를 통해 특정 입력 요소와 연결 시킨다.
+  
+#### 4. aria-pressed?
 
-In the project directory, you can run:
+   토글 버튼이 눌린 상태를 나타내는 속성
+   
+#### 5. aria-labelledby?
 
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+   레이블을 요소와 연결하는 데 사용되는 HTML 속성
+   
+#### 6. props를 넘기는 방법
+   ```
+   name={propName}
+   ```
+   으로 props를 넘긴다
+#### 7. React에서 변수 사용법
+  ```
+  {variableName}
+  ```
+  을 통해 변수 값을 사용할 수 있다
+   
+  
