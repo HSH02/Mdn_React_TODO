@@ -200,7 +200,8 @@
   값을 액세스, 업데이트 할 경우 'current'를 통해 작업을 진행한다.
   useRef 자체에 저장하지 않고 current에 굳이 저장하는 이유는 ref 작업을 위한 일관된 API를 제공하기 위해 current로 설계 되었기 때문이다.
   
-  주로 쓰이는 것이 Prev[FirstArgumentName]이다.
+  useRef에서 변경 전 값을 사용하기 위해 주로 사용하는 것이 Prev[FirstArgumentName]이다.
+  주로 useRef의 이전 값에 액세스 하는데 사용된다.
   
   ```
   import React, { useRef, useEffect, useState } from "react";
@@ -226,12 +227,37 @@
 
   export default Timer;
   ```
+ setTime에서 FirstArgumentName 받아 prev+time으로 prevtime을 받았다.
+ prevtime의 값은 현재 time의 값이다.
+  
  setTime이 호출될 때마다 prevTime 인수로 현재 상태 값을 받는다. 그리고 +1로 1초를 추가해 state를 업데이트 한다.
  
 #### 10. useEffect
    useEffect는 Component의 변화에 따라 Side-Effect 작업을 수행한다.
    
    Side-Effect는 Component 외부와 상호 작용하는 모든 작업이다
+   
+   ```   
+    useEffect(() => {
+      if (tasks.length - prevTaskLength === -1) {
+        listHeadingRef.current.focus();
+      }
+    }, [tasks.length, prevTaskLength]);
+   ```
+   주목할 것은 useEffect의 '[ ]'이다.
+   useEffect에서 [ ] 의 명칭을 종속적 배열이라고 한다
+   종속적 배열 안의 변수의 갯수 , 데이터 형식이 무엇이든, 변화하면 useEffect가 실행된다.    
+   
+   ```
+   function usePrevious(value){
+      const ref = useRef();
+      useEffect(() => {
+        ref.current = value;
+      }); 
+      return ref.current;
+    }
+   ```
+    다만 종속석 배열이 없는 useEffect도 볼 수 있는데 이 경우에는 component가 업데이트 될때마다 자동으로 실행된다
   
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -239,11 +265,28 @@
 
 
 렌더링
-  React 내에서 렌더링은 컴포넌트르 기반으로 DOM을 생성 및 업데이트 하는 작업을 의미
+  React 내에서 렌더링은 컴포넌트르 기반으로 DOM을 생성 및 업데이트 하는 작업을 의미한다.
+  
+  좀 더 쉽게 비유로 설명하자면 다음과 같다.
+  
+  화가가 팔레트를 사용해 캔버스를 사용하는 것을 상상해보자.
+  
+  캔버스(DOM)위에 팔레트위에 올려둔 여러 물감(React의 데이터, State 및 Props 등등으로 그리던 도중 물감이 떨어지거나 변경할 수 있다. 
+  이 때 팔레트위의 물감을 업데이트 할 것인데 이 것이 렌더링이다.
+  
+  추가로, 만약 원래 그림에서 새로 그린 풍경이나 그림의 초안을 그리기 위해 작은 별도의 종이에 그리는데, 이것이 VDOM이라고 한다.
+  그 후 별도의 종이를 다 그리고 원래 그림에 추가하기 위해 별도의 종이(VDOM)과 캔버스(DOM)에 그린 것을 비교하고 차이점을 식별한다(diffing)
+  화가는 분석한 후 차이만 적용하여(reconciliation) 캔버스를 업데이트 한다
+  
+  그리고 최종적으로 만든 그림이 데이터를 사용하여 만든 사용자 인터페이스(UI)이다.
+  
+  이렇게 VDOM을 사용하면 일일이 캔버스를 새로 그려 시간, 캔버스 낭비 등등 을 절약해 효율적으로 그릴 것이다 
+  
 Hooks
-  React에서 특정한 작업을 수행하는 기능 
+  React에서 특정한 작업을 수행하는 기능이다.
+  클래스에서 굳이 구성하지 않아도 state 및 side-effect를 관리할 수 있다.
   
 Ref작업
-  React에서 DOM 노드나 React 컴포넌트 인스턴스에 접근하기 위한 방법을 통해 React Component에 대한 참조를 생성 및 관리한다.
+  React에서 DOM 노드나 React 컴포넌트 인스턴스에 대한 참조를 만들고 관리한다.
   
  
