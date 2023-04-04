@@ -143,16 +143,15 @@
    그리고  map은 필터링된 배열의 각 작업을 하나씩 처리하고 Component를 생성한다.
 
    task를 apple, banana처럼 바꿔서 다른 변수 이름처럼 바꿔서 사용할 수 있다
+   
    ```
      const FILTER_MAP = {
       All: () => true,
       Active: (apple) => !apple.completed,
       completed: (apple) => apple.completed,
-    };
-
-    const taskList = tasks
-      .filter(FILTER_MAP[filter])
-      .map((apple) => (
+      };
+      
+      const taskList = tasks.filter(FILTER_MAP[filter]).map((apple) => (
         <Todo
           id={apple.id}
           name={apple.name}
@@ -162,27 +161,32 @@
           deleteTask={deleteTask}
           editTask={editTask}
         />
-      ));
-     ```
-    이러면 filter가 반환하는 것이 task가 아닌 apple이 될 것이다.
-
-    콜백함수는 다른 함수의 인수로 사용되거나 이벤트 리스너로부터 호출되는 함수가 콜백 함수이다.
-    ```
-    function handleClick() {
+      ));    
+   ```
+      
+   이러면 filter가 반환하는 것이 task가 아닌 apple이 될 것이다.
+   
+   콜백함수는 다른 함수의 인수로 사용되거나 이벤트 리스너로부터 호출되는 함수가 콜백 함수이다.
+   
+   ```
+   function handleClick() {
       alert('Button clicked!');
     }
 
     const button = document.querySelector('#myButton');
     button.addEventListener('click', handleClick);
-    ```
-    handleClick은 함수이며, 콜백 함수이다.
-    addEventListener를 통해 이벤트 핸들러로 함수를 사용하는 것을 확인할 수 있다.
+   ```
+   
+   handleClick은 함수이며, 콜백 함수이다.
+   
+  addEventListener를 통해 이벤트 핸들러로 함수를 사용하는 것을 확인할 수 있다.
 
-    이벤트와 함수를 판가름 하는 것은 다음과 같다.
+  이벤트와 함수를 판가름 하는 것은 다음과 같다.
 
-    + 이벤트는 사용자, 시스템 또는 코드의 다른 부분에 의해 트리거되는 발생 또는 동작이다. 예로는 마우스 클릭, 키 누름, 페이지 로드 또는 서버에서 수신되는 데이터가 있다.
-    + 함수는 특정 목적을 위해 작업을 수행하는 재사용 가능한 코드 블록이다.
-
+  + 이벤트는 사용자, 시스템 또는 코드의 다른 부분에 의해 트리거되는 발생 또는 동작이다. 예로는 마우스 클릭, 키 누름, 페이지 로드 또는 서버에서 수신되는 데이터가 있다.
+  + 함수는 특정 목적을 위해 작업을 수행하는 재사용 가능한 코드 블록이다.
+  
+  
 #### 9. useRef
   useRef는 원하는 값을 저장하는 컨테이너이다.
   state와 차이점은 'setState'로 state를 업데이트 하면 Component의 렌더링이 다시 트리거 되지만, 'useRef'는 값을 업데이트 하면 렌더링 되지 않는다.
@@ -248,6 +252,9 @@
    useEffect에서 [ ] 의 명칭을 종속적 배열이라고 한다
    종속적 배열 안의 변수의 갯수 , 데이터 형식이 무엇이든, 변화하면 useEffect가 실행된다.    
    
+      
+   다만 종속석 배열이 없는 useEffect도 볼 수 있는데 이 경우에는 component가 업데이트 될때마다 자동으로 실행된다
+   
    ```
    function usePrevious(value){
       const ref = useRef();
@@ -257,14 +264,14 @@
       return ref.current;
     }
    ```
-    다만 종속석 배열이 없는 useEffect도 볼 수 있는데 이 경우에는 component가 업데이트 될때마다 자동으로 실행된다
-  
+     
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 추가로 적어놓은 것들
 
 
-렌더링
+#### 렌더링
+
   React 내에서 렌더링은 컴포넌트르 기반으로 DOM을 생성 및 업데이트 하는 작업을 의미한다.
   
   좀 더 쉽게 비유로 설명하자면 다음과 같다.
@@ -282,11 +289,16 @@
   
   이렇게 VDOM을 사용하면 일일이 캔버스를 새로 그려 시간, 캔버스 낭비 등등 을 절약해 효율적으로 그릴 것이다 
   
-Hooks
+#### Hooks
+  
   React에서 특정한 작업을 수행하는 기능이다.
   클래스에서 굳이 구성하지 않아도 state 및 side-effect를 관리할 수 있다.
   
-Ref작업
+#### Ref작업
+  
   React에서 DOM 노드나 React 컴포넌트 인스턴스에 대한 참조를 만들고 관리한다.
   
  
+
+
+
